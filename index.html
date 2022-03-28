@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+		<title>Hello, world!</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div id="content" class="col-12 mt-4 pt-4 mb-4 pb-4">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+  <!-- Using Google Sheet as Database -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+  <script type="text/javascript">
+		function init() {
+
+         Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vTujJ-E6ewRcRLhx9zRhO9tizh552GGP51TfQKdAkCWeQcQtn91PSBQSPAoODGBRJaOdzpnNyLULLbg/pub?output=csv', {
+            download: true,
+            header: true,
+            complete: function(results) {
+
+               console.log(results.data); // What data do we get back?
+
+               // Now do something with your data
+               let html = "";
+               results.data.forEach( item => {
+
+                  // html += "<h1>" + item.title + "</h1>"; // Smaller Example
+                  html += "" +
+                     "<div class='card m-4'>" +
+                        "<img src='" + item.img + "' class='card-img-top'/>" +
+                        "<div class='card-body'>" +
+                           "<h1>" + item.title + "</h1>" + 
+                           "<h5>" + item.subtitle + "</h5>" + 
+                           "<p>" + item.post + "</p>" + 
+                        "</div>" +
+                        "<div class='card-footer text-muted'>" +
+                           "<span>" + item.date + "</span>" + 
+                        "</div>" +
+                     "</div>" +
+                  "";
+               });
+               document.getElementById("content").innerHTML = html;
+            }
+			})
+		}
+		window.addEventListener('DOMContentLoaded', init)
+	</script>
+  
+</html>
